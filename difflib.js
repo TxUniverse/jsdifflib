@@ -93,57 +93,46 @@ DAMAGE.
           }
 
           if (change === "insert") {
-            dataLines.push({line: n, newText: txtB[n], change})
+            dataLines.push({line: n, text: txtB[n], change})
             n++
           }
           else if (change === "replace") {
-            if (typeof txtB[b] !== 'undefined') {
-              dataLines.push({line: b, oldText: txtA[n], newText: txtB[b], change})
-            } else {
-              dataLines.push({line: b, oldText: txtA[n], change: 'delete'})
+            if (b < be) {
+              dataLines.push({line: b, change: 'delete'})
+              b++
             }
-            b++
-            n++
+            if (n < ne) {
+              dataLines.push({line: n, text: txtB[n], change: 'insert'})
+              n++
+            }
           } else if (change === "delete") {
-            dataLines.push({line: b, oldText: txtA[b], change})
+            dataLines.push({line: b, text: txtA[b], change})
             b++
           }
         }
       }
 
-      return { dataLines, newNumLines: txtB.length }
+      return dataLines
     },
 
-    applyChanges: function (diffObj, current) {
-      let diff = diffObj.dataLines
-      let maxLines = diffObj.newNumLines
+    applyChanges: function (dataLines, current) {
       let txt = diffLib.stringAsLines(current)
-      let newTxt = []
-      let diffLine = 0
 
-      if (diff.length > 0) {
+      if (dataLines.length > 0) {
 
-        for (let i = 0 ; i < (txt.length < maxLines ? maxLines : txt.length) ; i++) {
-          if (typeof diff[diffLine] !== 'undefined' && diff[diffLine].line === i) {
-            if (diff[diffLine].change === 'insert') {
-              newTxt.push(diff[diffLine].newText)
-              i--
-            } else if (diff[diffLine].change === 'replace') {
-              newTxt.push(diff[diffLine].newText)
-            } else if (diff[diffLine].change === 'delete') {
-              // nothing to do on delete?
-            }
-            diffLine++
-          } else {
-            newTxt.push(txt[i])
+        let diffLine = 0
+        for (let i = 0; i < dataLines.length; i++) {
+          if (dataLines[i].change === 'delete') {
+            txt.splice(dataLines[i].line + diffLine--, 1)
           }
         }
-
-      } else {
-        newTxt = txt
+        for (let i = 0; i < dataLines.length; i++) {
+          if (dataLines[i].change === 'insert') {
+            txt.splice(dataLines[i].line, 0, dataLines[i].text)
+          }
+        }
       }
-
-      return newTxt.slice(0, maxLines).join('\n')
+      return txt.join('\n')
     },
 
     sequenceMatcher: function (a, b, isjunk) {
