@@ -1,0 +1,14 @@
+{
+  "author": "Marc Godard",
+  "name": "tx-jsdifflib",
+  "description": "Registers and applies changes to lines that are different.",
+  "version": "0.1.0",
+  "repository": {
+    "url": ""
+  },
+  "main": "./difflib.js",
+  "keywords": [
+    "diff"
+  ],
+  "dependencies": {}
+}
