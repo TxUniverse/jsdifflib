@@ -1,0 +1,59 @@
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <title>Test</title>
+</head>
+<body>
+Data:
+<textarea id="baseText" style="height:200px" disabled>0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10</textarea>
+<br><br>
+Edit:
+<textarea id="newText" style="height:200px" onkeyup="diff()">0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10</textarea>
+<br><br>
+Else:
+<textarea id="remoteText" style="height:200px" disabled>0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10</textarea>
+
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="../difflib.js"></script>
+<script>
+
+  function diff() {
+    let diff = new diffLib.getDiff($("#baseText").val(), $("#newText").val())
+    let newText = diffLib.applyChanges(diff, ($("#remoteText").val()))
+    $("#remoteText").val(newText)
+    $("#baseText").val(newText)
+
+  }
+</script>
+
+
+</body></html>
