@@ -2,7 +2,7 @@
   "author": "Marc Godard",
   "name": "tx-diff",
   "description": "Registers and applies changes to lines that are different.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "repository": {
     "url": "https://github.com/TxUniverse/tx-diff.git"
   },
