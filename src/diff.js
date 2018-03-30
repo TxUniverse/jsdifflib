@@ -93,20 +93,20 @@ DAMAGE.
           }
 
           if (change === "insert") {
-            dataLines.push({line: n, text: txtB[n], change})
+            dataLines.push({l: n, t: txtB[n], c: 'i'})
             n++
           }
           else if (change === "replace") {
             if (b < be) {
-              dataLines.push({line: b, change: 'delete'})
+              dataLines.push({l: b, c: 'd'})
               b++
             }
             if (n < ne) {
-              dataLines.push({line: n, text: txtB[n], change: 'insert'})
+              dataLines.push({l: n, t: txtB[n], c: 'i'})
               n++
             }
           } else if (change === "delete") {
-            dataLines.push({line: b, text: txtA[b], change})
+            dataLines.push({l: b, t: txtA[b], c: 'd'})
             b++
           }
         }
@@ -122,13 +122,13 @@ DAMAGE.
 
         let diffLine = 0
         for (let i = 0; i < dataLines.length; i++) {
-          if (dataLines[i].change === 'delete') {
-            txt.splice(dataLines[i].line + diffLine--, 1)
+          if (dataLines[i].c === 'd') {
+            txt.splice(dataLines[i].l + diffLine--, 1)
           }
         }
         for (let i = 0; i < dataLines.length; i++) {
-          if (dataLines[i].change === 'insert') {
-            txt.splice(dataLines[i].line, 0, dataLines[i].text)
+          if (dataLines[i].c === 'i') {
+            txt.splice(dataLines[i].l, 0, dataLines[i].text)
           }
         }
       }
