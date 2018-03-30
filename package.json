@@ -4,11 +4,12 @@
   "description": "Registers and applies changes to lines that are different.",
   "version": "0.1.0",
   "repository": {
-    "url": ""
+    "url": "https://github.com/TxUniverse/jsdifflib.git"
   },
   "main": "./difflib.js",
   "keywords": [
     "diff"
   ],
+  "license": "MIT",
   "dependencies": {}
 }
